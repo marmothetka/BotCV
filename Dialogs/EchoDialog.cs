@@ -5,6 +5,7 @@ using Microsoft.Bot.Connector;
 using Microsoft.Bot.Builder.Dialogs;
 using System.Net.Http;
 using System.Text;
+using System.Linq;
 
 namespace BotCV
 {
@@ -35,9 +36,9 @@ namespace BotCV
             }
             else
             {
-                var image = Encoding.ASCII.GetBytes(message.Text);
+                ;
                 var cv = new CVController();
-                var result = await cv.GetAsync(image);
+                var result = await cv.GetAsync(message.Attachments.First().ContentUrl);
                 await context.PostAsync($"{this.count++}: Image: {result}");
                 context.Wait(MessageReceivedAsync);
             }
