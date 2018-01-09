@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Web;
+using System.Linq;
 
 public class CVController {
 	const string subscriptionKey = "bd1177c4b63442f4b3db051dd71feb39";
@@ -46,7 +47,11 @@ public class CVController {
             string contentString = await response.Content.ReadAsStringAsync();
             var res = JsonConvert.DeserializeObject<CV.RootObject>(contentString);
 
-            return string.Join(",", res.description.tags);
+            var message = "Captions: " + string.Join(";", res.description.captions.Select(x => x.text))
+                    + "\nTags: "
+                    + string.Join(",", res.description.tags);
+
+            return message;
         }
     }
 }
