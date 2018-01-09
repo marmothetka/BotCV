@@ -39,7 +39,7 @@ namespace BotCV
                 ;
                 var cv = new CVController();
                 var result = await cv.GetAsync(message.Attachments.First().ContentUrl);
-                await context.PostAsync($"{this.count++}: Image: {result}");
+                await context.PostAsync(result);
                 context.Wait(MessageReceivedAsync);
             }
         }

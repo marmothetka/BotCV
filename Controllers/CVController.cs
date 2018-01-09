@@ -47,8 +47,8 @@ public class CVController {
             string contentString = await response.Content.ReadAsStringAsync();
             var res = JsonConvert.DeserializeObject<CV.RootObject>(contentString);
 
-            var message = "Captions: " + string.Join(";", res.description.captions.Select(x => x.text))
-                    + "\nTags: "
+            var message = "Captions: " + string.Join(", ", res.description.captions.Select(x => x.text))
+                    + "; Tags: "
                     + string.Join(",", res.description.tags);
 
             return message;
