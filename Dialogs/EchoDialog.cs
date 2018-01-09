@@ -23,31 +23,14 @@ namespace BotCV
         {
             var message = await argument;
 
-            
+            var cv = new CVController();
+            string inputUrl;
+           
+            inputUrl = message.Attachments.First().ThumbnailUrl ?? message.Attachments.First().ContentUrl;
+            var result = await cv.GetAsync(inputUrl);
 
-            if (message.Text == "reset")
-            {
-                PromptDialog.Confirm(
-                    context,
-                    AfterResetAsync,
-                    "Are you sure you want to reset the count?",
-                    "Didn't get that!",
-                    promptStyle: PromptStyle.Auto);
-            }
-            else
-            {
-                ;
-                var cv = new CVController();
-                var inputUrl = String.Empty;
-                if (message.Attachments == null)
-                    inputUrl = message.Text;
-                else
-                    inputUrl = message.Attachments.First().ContentUrl;
-                var result = await cv.GetAsync(inputUrl);
-
-                await context.PostAsync(result);
-                context.Wait(MessageReceivedAsync);
-            }
+            await context.PostAsync(result);
+            context.Wait(MessageReceivedAsync);
         }
 
         public async Task AfterResetAsync(IDialogContext context, IAwaitable<bool> argument)
